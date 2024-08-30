@@ -1,0 +1,18 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model wisata {
+  id         String   @id @default(uuid())
+  nama       String
+  jenis      String
+  coordinate Json   
+}
+
+
+
