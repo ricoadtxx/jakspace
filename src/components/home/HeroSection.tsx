@@ -2,7 +2,6 @@
 
 import { cn } from "@/lib/utils";
 import { Alfa_Slab_One } from "next/font/google";
-import Image from "next/image";
 import Link from "next/link";
 import Map3D from "../map3D/map3D";
 
@@ -28,11 +27,13 @@ const HeroSection = () => {
 							alfa.className
 						)}
 					>
-						Welcome to Jakspace
+						Welcome to{" "}
+						<span className="text-lime-500 tracking-widest">MARED</span>
 					</h1>
-					<p className="font-sans w-3/4 text-lg text-left text-white">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-						corporis.
+					<p className="font-sans w-3/4 text-lg text-justify tracking-wide text-white">
+						MARED atau Mapping And Regional Education Disparities. 3D WebGIS
+						yang fokus pada identifikasi dan pengukuran ketimpangan pendidikan
+						untuk perencanaan yang lebih baik.
 					</p>
 					<button
 						className={cn(
@@ -40,7 +41,7 @@ const HeroSection = () => {
 							alfa.className
 						)}
 					>
-						<Link href="/wisata">Explore</Link>
+						<Link href="/introduction">Explore</Link>
 						<svg
 							className="w-5 h-5"
 							stroke="currentColor"

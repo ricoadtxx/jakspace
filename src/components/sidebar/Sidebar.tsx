@@ -1,83 +1,84 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import Properties from "../wisata/Properties";
-import Nearby from "../wisata/Nearby";
-import { cn } from "@/lib/utils";
+import { sidebarLinks } from "@/constant";
+import { usePathname } from "next/navigation"; // Use usePathname for getting the current path
+import { PiXCircleFill } from "react-icons/pi";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const Sidebar = () => {
-	const [activeSection, setActiveSection] = useState("properties");
-	const pathname = usePathname();
-
-	const handleClick = (section: string) => {
-		setActiveSection(section);
-	};
+	const [expanded, setExpanded] = useState(false);
+	const pathname = usePathname(); // Get the current path
 
 	return (
-		<section className="sticky left-0 top-0 flex w-fit flex-col justify-between border-r border-gray-200 bg-[#eeeeee] pt-7 text-white max-md:hidden 2xl:w-[450px]">
-			<nav className="flex flex-col gap-4 text-black max-h-screen">
-				<Link
-					href="/"
-					className="mb-3 cursor-pointer flex items-center gap-2 px-6 "
-				>
-					<Image
-						src="/icons/logo.svg"
-						width={34}
-						height={34}
-						alt="Horizon logo"
-						className="size-[24px] max-xl:size-14"
-					/>
-					<h1 className="2xl:text-26 font-ibm-plex-serif text-[26px] font-bold text-black-1 max-xl:hidden">
-						JAKSPACE
-					</h1>
-				</Link>
-				<div className="mb-2 flex justify-center pb-5 gap-20 border-b-2 px-8">
-					<button
-						onClick={() => handleClick("properties")}
-						className={cn(
-							"font-sans px-10 py-1 border transition-colors duration-300",
-							{
-								"rounded-sm bg-[#d6d6d6] [box-shadow:inset_2px_2px_5px_#6f6f6f,_inset_-5px_-5px_10px_#ffe8e8]":
-									activeSection === "properties",
-								"border-gray-600 rounded-sm": activeSection !== "properties",
-								"border-transparent": activeSection === "properties",
-							}
-						)}
+		<div className="relative z-50 ">
+			{/* Tombol Hamburger hanya untuk tampilan mobile */}
+			<button
+				className="md:hidden fixed top-4 right-4 z-50 p-2 bg-gray-800 text-white rounded-lg"
+				onClick={() => setExpanded((curr) => !curr)}
+			>
+				{expanded ? <PiXCircleFill /> : <GiHamburgerMenu />}
+			</button>
+
+			{/* Sidebar */}
+			<div
+				className={`bg-[#150e3d55] fixed top-0 left-0 h-screen overflow-hidden md:w-72 dark:bg-gray-900 px-4 pt-10 transform transition-all duration-300 md:static ${
+					expanded ? "w-64" : "w-[75px]"
+				}`}
+			>
+				<div className="flex justify-between items-center mb-6 px-1">
+					<Link
+						href="/"
+						className="items-center gap-3 flex text-xl font-extrabold tracking-wider text-white"
 					>
-						Properties
-					</button>
-					<button
-						onClick={() => handleClick("nearby")}
-						className={cn(
-							"font-sans px-10 py-1 border transition-colors duration-300",
-							{
-								"rounded-sm bg-[#d6d6d6] [box-shadow:inset_2px_2px_5px_#6f6f6f,_inset_-5px_-5px_10px_#ffe8e8]":
-									activeSection === "nearby",
-								"border-gray-600 rounded-sm": activeSection !== "nearby",
-								"border-transparent": activeSection === "nearby",
-							}
-						)}
-					>
-						Nearby
-					</button>
+						<Image
+							src="/icons/logo.svg"
+							alt="logo"
+							width={32}
+							height={32}
+							className="rounded-full"
+						/>
+						<span
+							className={`text-lime-700 overflow-hidden transition-all md:text-2xl duration-300 ${
+								expanded ? "opacity-100" : "opacity-0 md:opacity-100"
+							}`}
+						>
+							MARED
+						</span>
+					</Link>
 				</div>
-				<div>
-					{activeSection === "properties" && (
-						<div>
-							<Properties />
-						</div>
-					)}
-					{activeSection === "nearby" && (
-						<div>
-							<Nearby />
-						</div>
-					)}
+				<hr className="border-2" />
+				<div className="mt-5 overflow-hidden">
+					{sidebarLinks.map((item) => {
+						const Icon = item.icon;
+						const isActive = pathname === item.route; // Check if the current path matches the item's route
+
+						return (
+							<Link
+								key={item.label}
+								href={item.route}
+								className={`flex relative items-center px-1 gap-5 mb-4 py-2 rounded-lg transition-all duration-300 ${
+									isActive
+										? "bg-lime-700 text-white" // Active link styles
+										: "hover:bg-gray-600 dark:hover:bg-gray-700"
+								}`}
+							>
+								<Icon size={27} className="text-white mx-1 absolute" />
+								<span
+									className={`font-medium font-sans text-xl mx-11 text-white transition duration-300 ${
+										expanded ? "opacity-100" : "opacity-0 md:opacity-100"
+									}`}
+								>
+									{item.label}
+								</span>
+							</Link>
+						);
+					})}
 				</div>
-			</nav>
-		</section>
+			</div>
+		</div>
 	);
 };
 

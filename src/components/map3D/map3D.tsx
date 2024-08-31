@@ -6,14 +6,15 @@ import "mapbox-gl/dist/mapbox-gl.css";
 const Map3D = () => {
 	const mapContainerRef: any = useRef();
 	const mapRef: any = useRef();
+	const rotateAnimationRef: any = useRef();
 
 	useEffect(() => {
 		mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_KEY as string;
 
 		mapRef.current = new mapboxgl.Map({
 			style: "mapbox://styles/mapbox/light-v11",
-			center: [106.89610474368924, -6.199038337305248],
-			zoom: 15.7,
+			center: [106.82714821674968, -6.175291011452824],
+			zoom: 15.6,
 			pitch: 75,
 			bearing: -40.6,
 			container: "map",
@@ -59,9 +60,22 @@ const Map3D = () => {
 				},
 				labelLayerId
 			);
+
+			const rotateCamera = (timestamp: number) => {
+				mapRef.current.rotateTo((timestamp / 1000) % 360, { duration: 0 });
+
+				rotateAnimationRef.current = requestAnimationFrame(rotateCamera);
+			};
+
+			rotateAnimationRef.current = requestAnimationFrame(rotateCamera);
 		});
 
-		return () => mapRef.current.remove();
+		return () => {
+			if (rotateAnimationRef.current) {
+				cancelAnimationFrame(rotateAnimationRef.current);
+			}
+			mapRef.current.remove();
+		};
 	}, []);
 
 	return <div id="map" ref={mapContainerRef} style={{ height: "100%" }}></div>;

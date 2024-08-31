@@ -1,28 +1,43 @@
+import {
+	FaLandmark,
+	FaMap,
+	FaIndustry,
+	FaBook,
+	FaComment,
+} from "react-icons/fa";
+
 export const NavLinks = [
-	{ href: "/wisata", key: "Wisata", text: "Wisata" },
-	{ href: "/festival", key: "Festival", text: "Festival" },
-	{ href: "/kuliner", key: "Kuliner", text: "Kuliner" },
+	{ href: "/introduction", key: "Introduction", text: "Introduction" },
+	{ href: "/landuse", key: "Landuse", text: "Landuse" },
+	{ href: "/planning", key: "Planning", text: "Planning" },
+	{ href: "/realization", key: "Realization", text: "Realization" },
+	{ href: "/conclusion", key: "Conclusion", text: "Conclusion" },
 ];
 
 export const sidebarLinks = [
 	{
-		imgURL: "/icons/home.svg",
-		route: "/",
-		label: "Home",
+		icon: FaComment,
+		route: "/introduction",
+		label: "Introduction",
 	},
 	{
-		imgURL: "/icons/dollar-circle.svg",
-		route: "/my-banks",
-		label: "My Banks",
+		icon: FaLandmark,
+		route: "/landuse",
+		label: "Landuse",
 	},
 	{
-		imgURL: "/icons/transaction.svg",
-		route: "/transaction-history",
-		label: "Transaction History",
+		icon: FaMap,
+		route: "/planning",
+		label: "Planning",
 	},
 	{
-		imgURL: "/icons/money-send.svg",
-		route: "/payment-transfer",
-		label: "Transfer Funds",
+		icon: FaIndustry,
+		route: "/realization",
+		label: "Realization",
+	},
+	{
+		icon: FaBook,
+		route: "/conclusion",
+		label: "Conclusion",
 	},
 ];
