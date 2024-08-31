@@ -1,28 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { sidebarLinks } from "@/constant";
-import { usePathname } from "next/navigation"; // Use usePathname for getting the current path
+import { usePathname } from "next/navigation";
 import { PiXCircleFill } from "react-icons/pi";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 const Sidebar = () => {
 	const [expanded, setExpanded] = useState(false);
-	const pathname = usePathname(); // Get the current path
+	const pathname = usePathname();
 
 	return (
 		<div className="relative z-50 ">
-			{/* Tombol Hamburger hanya untuk tampilan mobile */}
 			<button
 				className="md:hidden fixed top-4 right-4 z-50 p-2 bg-gray-800 text-white rounded-lg"
 				onClick={() => setExpanded((curr) => !curr)}
 			>
 				{expanded ? <PiXCircleFill /> : <GiHamburgerMenu />}
 			</button>
-
-			{/* Sidebar */}
 			<div
 				className={`bg-[#150e3d55] fixed top-0 left-0 h-screen overflow-hidden md:w-72 dark:bg-gray-900 px-4 pt-10 transform transition-all duration-300 md:static ${
 					expanded ? "w-64" : "w-[75px]"
@@ -53,8 +50,7 @@ const Sidebar = () => {
 				<div className="mt-5 overflow-hidden">
 					{sidebarLinks.map((item) => {
 						const Icon = item.icon;
-						const isActive = pathname === item.route; // Check if the current path matches the item's route
-
+						const isActive = pathname === item.route;
 						return (
 							<Link
 								key={item.label}
